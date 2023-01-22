@@ -1,0 +1,18 @@
+query getUser($id: uuid!) {
+  user(id: $id) {
+    id
+    email
+    displayName
+    profile {
+      id
+      stripeCustomerId
+      stripeCustomer {
+        subscriptions {
+          data {
+            id
+          }
+        }
+      }
+    }
+  }
+}

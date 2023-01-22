@@ -1,0 +1,11 @@
+mutation createCustomerPortalSession(
+  $customerId: String!
+  $returnUrl: String!
+) {
+  stripe {
+    createBillingPortalSession(customer: $customerId, returnUrl: $returnUrl) {
+      id
+      url
+    }
+  }
+}

@@ -1,0 +1,42 @@
+table:
+  name: profiles
+  schema: public
+configuration:
+  column_config:
+    stripe_customer_id:
+      custom_name: stripeCustomerId
+  custom_column_names:
+    stripe_customer_id: stripeCustomerId
+  custom_root_fields:
+    insert: insertProfiles
+    insert_one: insertProfile
+object_relationships:
+  - name: plan
+    using:
+      foreign_key_constraint_on: plan_id
+  - name: user
+    using:
+      foreign_key_constraint_on: id
+remote_relationships:
+  - definition:
+      to_remote_schema:
+        lhs_fields:
+          - stripe_customer_id
+        remote_field:
+          stripe:
+            arguments: {}
+            field:
+              customer:
+                arguments:
+                  id: $stripe_customer_id
+        remote_schema: stripe
+    name: stripeCustomer
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - stripe_customer_id
+        - id
+      filter:
+        id:
+          _eq: X-Hasura-User-Id

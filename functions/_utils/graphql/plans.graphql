@@ -1,0 +1,6 @@
+query getPlans($where: plans_bool_exp!) {
+  plans(where: $where) {
+    id
+    name
+  }
+}

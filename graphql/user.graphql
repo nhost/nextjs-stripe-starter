@@ -1,0 +1,39 @@
+query getUser($id: uuid!) {
+  user(id: $id) {
+    id
+    profile {
+      id
+      stripeCustomerId
+      stripeCustomer {
+        invoices {
+          data {
+            id
+            created
+            invoicePdf
+            hostedInvoiceUrl
+            paid
+          }
+        }
+        subscriptions {
+          data {
+            id
+            items {
+              data {
+                id
+                price {
+                  id
+                  unitAmount
+                  currency
+                  product {
+                    id
+                    name
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

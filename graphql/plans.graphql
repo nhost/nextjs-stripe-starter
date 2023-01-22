@@ -1,0 +1,39 @@
+fragment plan on plans {
+  id
+  name
+  description
+  amount
+  currency
+  stripePriceId
+}
+
+fragment UserWithSubscription on users {
+  id
+  profile {
+    id
+    stripeCustomer {
+      subscriptions {
+        data {
+          id
+          items {
+            data {
+              id
+              price {
+                id
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getPlansAndSubscription($userId: uuid!) {
+  plans {
+    ...plan
+  }
+  user(id: $userId) {
+    ...UserWithSubscription
+  }
+}

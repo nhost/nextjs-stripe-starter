@@ -1,0 +1,35 @@
+table:
+  name: products
+  schema: public
+configuration:
+  column_config:
+    created_at:
+      custom_name: createdAt
+    stripe_price_id:
+      custom_name: stripePriceId
+    updated_at:
+      custom_name: updatedAt
+  custom_column_names:
+    created_at: createdAt
+    stripe_price_id: stripePriceId
+    updated_at: updatedAt
+  custom_root_fields: {}
+array_relationships:
+  - name: profiles
+    using:
+      foreign_key_constraint_on:
+        column: plan_id
+        table:
+          name: profiles
+          schema: public
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - amount
+        - currency
+        - description
+        - id
+        - name
+        - stripe_price_id
+      filter: {}

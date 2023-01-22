@@ -1,0 +1,17 @@
+mutation InsertProfile($profile: profiles_insert_input!) {
+  insertProfile(object: $profile) {
+    id
+  }
+}
+
+mutation UpdateProfileUsingStripeCustomerId(
+  $stripeCustomerId: String!
+  $profile: profiles_set_input!
+) {
+  update_profiles(
+    where: { stripeCustomerId: { _eq: $stripeCustomerId } }
+    _set: $profile
+  ) {
+    affected_rows
+  }
+}

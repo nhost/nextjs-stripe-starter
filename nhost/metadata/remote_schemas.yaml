@@ -1,0 +1,6 @@
+- name: stripe
+  definition:
+    url: '{{NHOST_BACKEND_URL}}/v1/functions/graphql/stripe'
+    timeout_seconds: 60
+    customization: {}
+    forward_client_headers: true
