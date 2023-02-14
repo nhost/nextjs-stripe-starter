@@ -23,7 +23,7 @@ The ultimate starter kit for high-performance SaaS applications.
 
 ## Demo
 
-- https://xxx.vercel.app/
+- [https://nextjs-stripe-starter-template.vercel.app/](https://nextjs-stripe-starter-template.vercel.app/)
 
 [![Screenshot of demo](./public/demo.png)](https://xxx.vercel.app/)
 
