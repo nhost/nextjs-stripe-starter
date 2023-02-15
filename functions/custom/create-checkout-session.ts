@@ -5,6 +5,11 @@ import { allowCors, getUser } from '../_utils/helpers';
 import { stripe } from 'functions/_utils/stripe';
 
 const handler = async (req: Request, res: Response) => {
+  console.log('create-checkout-session called');
+  console.log(req.body);
+  console.log(req.query);
+  console.log(req.headers);
+
   // CORS
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
