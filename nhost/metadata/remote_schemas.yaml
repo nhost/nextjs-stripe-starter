@@ -1,6 +1,581 @@
 - name: stripe
   definition:
-    url: '{{NHOST_BACKEND_URL}}/v1/functions/graphql/stripe'
+    url: '{{NHOST_FUNCTIONS_URL}}/graphql/stripe'
     timeout_seconds: 60
     customization: {}
     forward_client_headers: true
+  comment: ""
+  permissions:
+    - role: user
+      definition:
+        schema: |
+          schema {
+            query: Query
+          }
+          scalar JSON
+          type Query {
+            stripe: Stripe!
+          }
+          type Stripe {
+            connectedAccount(id: String!): StripeConnectedAccount!
+            connectedAccounts: StripeConnectedAccounts!
+            customer(id: String!): StripeCustomer!
+            customers(email: String, endingBefore: String, limit: Int, startingAfter: String): StripeCustomers!
+          }
+          type StripeAddress {
+            city: String
+            country: String
+            line1: String
+            line2: String
+            postalCode: String
+            state: String
+          }
+          type StripeBillingPortalSession {
+            created: Int!
+            id: String!
+            livemode: Boolean!
+            locale: String
+            object: String!
+            returnUrl: String
+            url: String!
+          }
+          type StripeCharge {
+            amount: Int!
+            amountCaptured: Int!
+            amountRefunded: Int!
+            application: StripeConnectedAccount
+            applicationFeeAmount: Int
+            billingDetails: JSON
+            calculatedStatementDescriptor: String
+            captured: Boolean!
+            created: Int
+            currency: String!
+            customer: String!
+            description: String
+            disputed: Boolean!
+            failureCode: String
+            fraudDetails: JSON
+            id: String!
+            invoice: StripeInvoice
+            livemode: Boolean!
+            metadata: JSON
+            outcome: JSON
+            paid: Boolean!
+            paymentIntent: String
+            paymentMethod: String
+            paymentMethodDetails: JSON
+            receiptEmail: String
+            receiptNumber: String
+            receiptUrl: String
+            refunded: Boolean!
+            refunds: JSON
+            shipping: JSON
+            statementDescriptor: String
+            statementDescriptorSuffix: String
+            status: String!
+            transferData: JSON
+            transferGroup: String
+          }
+          type StripeCharges {
+            data: [StripeCharge!]!
+            hasMore: Boolean!
+            object: String!
+            url: String!
+          }
+          type StripeConnectedAccount {
+            businessProfile: JSON!
+            businessType: String
+            capabilities: JSON!
+            chargesEnabled: Boolean!
+            company: JSON!
+            controller: JSON
+            country: String
+            created: Int
+            defaultCurrency: String
+            detailsSubmitted: Boolean!
+            email: String
+            externalAccounts: JSON!
+            futureRequirements: JSON!
+            id: String!
+            individual: JSON!
+            metadata: JSON!
+            object: String!
+            payoutsEnabled: Boolean!
+            requirements: JSON!
+            settings: JSON!
+            tosAcceptance: JSON!
+          }
+          type StripeConnectedAccounts {
+            data: [StripeConnectedAccount!]!
+            hasMore: Boolean!
+            object: String!
+            url: String!
+          }
+          type StripeCustomer {
+            address: StripeAddress
+            balance: Int!
+            charges: StripeCharges!
+            created: Int!
+            currency: String
+            delinquent: Boolean
+            description: String
+            email: String
+            id: String!
+            invoicePrefix: String
+            invoices: StripeInvoices!
+            livemode: Boolean!
+            metadata: JSON!
+            name: String
+            nextInvoiceSequence: Int
+            object: String!
+            paymentIntents: StripePaymentIntents!
+            paymentMethods(endingBefore: String, limit: Int, startingAfter: String, type: StripePaymentMethodTypes! = card): StripePaymentMethods!
+            phone: String
+            preferredLocales: [String!]
+            shipping: StripeCustomerShipping
+            subscriptions: StripeSubscriptions!
+            tax: StripeCustomerTax
+          }
+          type StripeCustomerShipping {
+            address: StripeAddress
+            carrier: String
+            name: String
+            phone: String
+            trackingNumber: String
+          }
+          type StripeCustomerTax {
+            ipAddress: String
+            location: StripeCustomerTaxLocation
+          }
+          type StripeCustomerTaxLocation {
+            country: String!
+            state: String
+          }
+          type StripeCustomers {
+            data: [StripeCustomer!]!
+            hasMore: Boolean!
+            object: String!
+            url: String!
+          }
+          type StripeInvoice {
+            accountCountry: String
+            accountName: String
+            amountDue: Int!
+            amountPaid: Int!
+            amountRemaining: Int!
+            application: StripeConnectedAccount
+            applicationFeeAmount: Int
+            attemptCount: Int!
+            attempted: Boolean!
+            autoAdvance: Boolean
+            automaticTax: StripeInvoiceAutomaticTax!
+            billingReason: String
+            collectionMethod: String
+            created: Int!
+            currency: String!
+            customer: String!
+            customerAddress: StripeAddress
+            customerEmail: String
+            customerName: String
+            customerPhone: String
+            customerShipping: StripeInvoiceCustomerShipping
+            customerTaxExempt: String
+            customerTaxIds: [StripeInvoiceCustomerTaxId!]
+            defaultPaymentMethod: StripePaymentMethod
+            description: String
+            dueDate: Int
+            endingBalance: Int
+            footer: String
+            hostedInvoiceUrl: String
+            id: String!
+            invoicePdf: String
+            lines: StripeInvoiceLineItems!
+            livemode: Boolean!
+            metadata: JSON!
+            nextPaymentAttempt: Int
+            number: String
+            object: String!
+            paid: Boolean!
+            paidOutOfBand: Boolean!
+            periodEnd: Int!
+            periodStart: Int!
+            postPaymentCreditNotesAmount: Int!
+            prePaymentCreditNotesAmount: Int!
+            receiptNumber: String
+            renderingOptions: StripeInvoiceRenderingOptions
+            startingBalance: Int!
+            statementDescriptor: String
+            status: String
+            statusTransition: StripeInvoiceStatusTransitions
+            subscription: StripeSubscription
+            subscriptionProrationDate: Int
+            subtotal: Int!
+            subtotalExcludingTax: Int
+            tax: Int
+            total: Int!
+            totalExcludingTax: Int
+            webhooksDeliveredAt: Int
+          }
+          type StripeInvoiceAutomaticTax {
+            enabled: Boolean!
+            status: String
+          }
+          type StripeInvoiceCustomerShipping {
+            address: StripeAddress
+            carrier: String
+            name: String
+            phone: String
+            trackingNumber: String
+          }
+          type StripeInvoiceCustomerTaxId {
+            type: String!
+            value: String
+          }
+          type StripeInvoiceLineItem {
+            amount: Int!
+            amountExcludingTax: Int
+            currency: String!
+            description: String
+            discountable: Boolean!
+            id: String!
+            invoiceItem: String
+            livemode: Boolean!
+            metadata: JSON!
+            object: String!
+            period: StripeInvoiceLineItemPeriod!
+            plan: StripePlan
+            price: StripePrice
+            proration: Boolean!
+            quantity: Int
+            taxAmount: [StripeInvoiceLineItemTaxAmount!]
+            taxRates: [StripeTaxRate!]
+            type: String!
+            unitAmountExcludingTax: String
+          }
+          type StripeInvoiceLineItemPeriod {
+            end: Int!
+            start: Int!
+          }
+          type StripeInvoiceLineItemTaxAmount {
+            amount: Int!
+            inclusive: Boolean!
+          }
+          type StripeInvoiceLineItems {
+            data: [StripeInvoiceLineItem!]!
+            hasMore: Boolean!
+            object: String!
+            url: String!
+          }
+          type StripeInvoiceRenderingOptions {
+            amountTaxDisplay: String
+          }
+          type StripeInvoiceStatusTransitions {
+            finalizedAt: Int
+            markedUncollectibleAt: Int
+            paidAt: Int
+            voidedAt: Int
+          }
+          type StripeInvoices {
+            data: [StripeInvoice!]!
+            hasMore: Boolean!
+            object: String!
+            url: String!
+          }
+          type StripeMutations {
+            createBillingPortalSession(configuration: String, customer: String!, locale: String, returnUrl: String): StripeBillingPortalSession!
+          }
+          type StripePaymentIntent {
+            amount: Int!
+            amountCapturable: Int!
+            amountDetails: JSON
+            amountReceived: Int!
+            applicationFeeAmount: Int
+            canceledAt: Int
+            cancellationReason: String
+            created: Int
+            currency: String!
+            customer: String!
+            description: String
+            id: String!
+            invoice: StripeInvoice
+            metadata: JSON
+            object: String!
+            paymentMethodTypes: [String!]!
+            receiptEmail: String
+            statementDescriptor: String
+            statementDescriptorSuffix: String
+            status: String!
+            transferGroup: String
+          }
+          type StripePaymentIntents {
+            data: [StripePaymentIntent!]!
+            hasMore: Boolean!
+            object: String!
+            url: String!
+          }
+          type StripePaymentMethod {
+            billingDetails: StripePaymentMethodBillingDetails
+            card: StripePaymentMethodCard
+            created: Int!
+            customer: String
+            id: String!
+            livemode: Boolean!
+            metadata: JSON!
+            object: String!
+            type: StripePaymentMethodTypes!
+          }
+          type StripePaymentMethodBillingDetails {
+            address: StripeAddress
+            email: String
+            name: String
+            phone: String
+          }
+          type StripePaymentMethodCard {
+            brand: String!
+            check: StripePaymentMethodCardChecks
+            country: String
+            description: String
+            expMonth: Int!
+            expYear: Int!
+            fingerprint: String
+            funding: String!
+            iin: String
+            issuer: String
+            last4: String!
+            networks: StripePaymentMethodCardNetworks
+            threeDSecureUsage: StripePaymentMethodCardThreeDSecureUsage
+            wallet: StripePaymentMethodCardWallet
+          }
+          type StripePaymentMethodCardChecks {
+            addressLine1Check: String
+            addressPostalCodeCheck: String
+            cvcCheck: String
+          }
+          type StripePaymentMethodCardNetworks {
+            available: [String!]!
+            preferred: String
+          }
+          type StripePaymentMethodCardThreeDSecureUsage {
+            supported: Boolean!
+          }
+          type StripePaymentMethodCardWallet {
+            dynamicLast4: String
+            masterpass: StripePaymentMethodCardWalletMasterpass
+            type: StripePaymentMethodCardWalletType!
+            visaCheckout: StripePaymentMethodCardWalletVisaCheckout
+          }
+          type StripePaymentMethodCardWalletMasterpass {
+            billingAddress: StripeAddress
+            email: String
+            name: String
+            shippinAddress: StripeAddress
+          }
+          type StripePaymentMethodCardWalletVisaCheckout {
+            billingAddress: StripeAddress
+            email: String
+            name: String
+            shippinAddress: StripeAddress
+          }
+          type StripePaymentMethods {
+            data: [StripePaymentMethod!]!
+            hasMore: Boolean!
+            object: String!
+            url: String!
+          }
+          type StripePlan {
+            active: Boolean!
+            aggregateUsage: String
+            amount: Int
+            amountDecimal: String
+            billingScheme: String!
+            created: Int!
+            currency: String!
+            id: String!
+            interval: String!
+            intervalCount: Int!
+            livemode: Boolean!
+            metadata: JSON
+            nickname: String
+            object: String!
+            product: StripeProduct
+            tiersMode: String
+            transformUsage: StripePlanTransformUsage
+            trialPeriodDays: Int
+            usageType: String!
+          }
+          type StripePlanTransformUsage {
+            divideBy: Int!
+            round: String!
+          }
+          type StripePrice {
+            active: Boolean!
+            billingScheme: String!
+            created: Int!
+            currency: String!
+            id: String!
+            livemode: Boolean!
+            lookupKey: String
+            metadata: JSON
+            nickname: String
+            object: String!
+            product: StripeProduct!
+            tiersMode: String
+            type: String!
+            unitAmount: Int
+            unitAmountDecimal: String
+          }
+          type StripeProduct {
+            active: Boolean!
+            attributes: [String!]
+            caption: String
+            created: Int!
+            deactivateOn: [String!]
+            defaultPrice: StripePrice
+            description: String
+            id: String!
+            images: [String!]
+            livemode: Boolean!
+            metadata: JSON
+            name: String!
+            object: String!
+            sippable: Boolean
+            statementDescriptor: String
+            type: String!
+            unitLabel: String
+            updated: Int!
+            url: String
+          }
+          type StripeSubscription {
+            applicationFeePercent: Float
+            automaticTax: StripeSubscriptionAutomaticTax!
+            billingCycleAnchor: Int!
+            billingThresholds: StripeSubscriptionBillingThresholds
+            cancelAt: Int
+            cancelAtPeriodEnd: Boolean!
+            canceledAt: Int
+            collectionMethods: String!
+            created: Int!
+            currency: String!
+            currentPeriodEnd: Int!
+            currentPeriodStart: Int!
+            customer: String!
+            daysUntilDue: Int
+            defaultPaymentMethod: StripePaymentMethod
+            defaultTaxRates: [StripeTaxRate!]
+            description: String
+            endedAt: Int
+            id: String!
+            items: StripeSubscriptionItems!
+            latestInvoice: StripeInvoice
+            livemode: Boolean!
+            metadata: JSON!
+            nextPendingInvoiceItemInvoice: Int
+            object: String!
+            pauseCollection: StripeSubscriptionPauseCollection
+            startDate: Int!
+            status: String!
+            testClock: StripeTestClock
+            trialEnd: Int
+            trialStart: Int
+          }
+          type StripeSubscriptionAutomaticTax {
+            enabled: Boolean!
+          }
+          type StripeSubscriptionBillingThresholds {
+            amountGte: Int
+            resetBillingCycleAnchor: Boolean
+          }
+          type StripeSubscriptionItem {
+            billingThresholds: StripeSubscriptionItemBillingThresholds
+            created: Int!
+            id: String!
+            metadata: JSON!
+            object: String!
+            plan: StripePlan!
+            price: StripePrice!
+            quantity: Int
+            subscription: String!
+          }
+          type StripeSubscriptionItemBillingThresholds {
+            usageGte: Int
+          }
+          type StripeSubscriptionItems {
+            data: [StripeSubscriptionItem!]!
+            hasMore: Boolean!
+            object: String!
+            url: String!
+          }
+          type StripeSubscriptionPauseCollection {
+            behavior: String!
+            resumesAt: Int
+          }
+          type StripeSubscriptions {
+            data: [StripeSubscription!]!
+            hasMore: Boolean!
+            object: String!
+            url: String!
+          }
+          type StripeTaxRate {
+            active: Boolean!
+            country: String
+            created: Int!
+            description: String
+            displayName: String!
+            id: String!
+            inclusive: Boolean!
+            jurisdiction: String
+            livemode: Boolean!
+            metadata: JSON
+            object: String!
+            percentage: Float!
+            state: String
+            taxType: String
+          }
+          type StripeTestClock {
+            created: Int!
+            deletesAfter: Int!
+            frozenTime: Int!
+            id: String!
+            livemode: Boolean!
+            name: String
+            object: String!
+            status: String!
+          }
+          enum StripePaymentMethodCardWalletType {
+            amex_express_checkout
+            apple_pay
+            google_pay
+            masterpass
+            samsung_pay
+            visa_checkout
+          }
+          enum StripePaymentMethodTypes {
+            acss_debit
+            affirm
+            afterpay_clearpay
+            alipay
+            au_becs_debit
+            bacs_debit
+            bancontact
+            blik
+            boleto
+            card
+            card_present
+            customer_balance
+            eps
+            fpx
+            giropay
+            grabpay
+            ideal
+            klarna
+            konbini
+            link
+            oxxo
+            p24
+            paynow
+            promptpay
+            sepa_debit
+            sofort
+            us_bank_account
+            wechat_pay
+          }
