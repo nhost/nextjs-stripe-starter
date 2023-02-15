@@ -66,8 +66,8 @@ const handler = async (req: Request, res: Response) => {
       subscription_data: {
         trial_from_plan: true
       },
-      success_url: `${getURL()}/account`,
-      cancel_url: `${getURL()}/`
+      success_url: `https://nextjs-stripe-starter-template.vercel.app//account`,
+      cancel_url: `https://nextjs-stripe-starter-template.vercel.app//`
     });
 
     return res
