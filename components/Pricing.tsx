@@ -38,6 +38,9 @@ export default function Pricing({ plans, userWithSubscription }: PricingProps) {
         'custom/create-checkout-session',
         {
           priceId
+        },
+        {
+          useAxios: false
         }
       );
 
