@@ -1,10 +1,10 @@
 import { getURL } from 'utils/helpers';
 import { Request, Response } from 'express';
 import { sdk } from 'functions/_utils/graphql-client';
-import { getUser } from '../_utils/helpers';
+import { allowCors, getUser } from '../_utils/helpers';
 import { stripe } from 'functions/_utils/stripe';
 
-export default async (req: Request, res: Response) => {
+const handler = async (req: Request, res: Response) => {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     res.status(405).send('Method Not Allowed');
@@ -61,3 +61,5 @@ export default async (req: Request, res: Response) => {
     res.status(500).json({ error: { statusCode: 500, message: err.message } });
   }
 };
+
+export default allowCors(handler);
