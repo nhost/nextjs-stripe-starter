@@ -10,8 +10,7 @@
     "stripe:listen": "stripe listen --forward-to=localhost:1337/v1/functions/webhook/stripe"
   },
   "dependencies": {
-    "@nhost/nextjs": "^1.9.0",
-    "@nhost/react": "^0.15.0",
+    "@nhost/nextjs": "^1.13.3",
     "@nhost/stripe-graphql-js": "^0.0.6",
     "@stripe/stripe-js": "1.22.0",
     "@tanstack/react-query": "^4.16.1",

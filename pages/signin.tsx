@@ -6,7 +6,7 @@ import GitHub from 'components/icons/GitHub';
 import Input from 'components/ui/Input';
 import Logo from 'components/icons/Logo';
 import { getURL } from '@/utils/helpers';
-import { useSignInEmailPasswordless } from '@nhost/react';
+import { useSignInEmailPasswordless } from '@nhost/nextjs';
 import { nhost } from '@/utils/nhost';
 
 const SignIn = () => {

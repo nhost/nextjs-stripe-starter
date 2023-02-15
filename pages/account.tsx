@@ -7,7 +7,7 @@ import {
   useCreateCustomerPortalSessionMutation,
   useGetUserQuery
 } from '@/utils/__generated__/graphql';
-import { useUserData } from '@nhost/react';
+import { useUserData } from '@nhost/nextjs';
 import { format, fromUnixTime } from 'date-fns';
 
 interface Props {
