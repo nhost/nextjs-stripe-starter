@@ -5,9 +5,24 @@ import { allowCors, getUser } from '../_utils/helpers';
 import { stripe } from 'functions/_utils/stripe';
 
 const handler = async (req: Request, res: Response) => {
+  // CORS check
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET,OPTIONS,PATCH,DELETE,POST,PUT'
+  );
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  );
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
-    res.status(405).send('Method Not Allowed');
+    return res.status(405).send('Method Not Allowed');
   }
 
   const authenticatedUser = getUser(req);

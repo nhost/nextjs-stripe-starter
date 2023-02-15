@@ -11,8 +11,12 @@
         schema: |
           schema {
             query: Query
+            mutation: Mutation
           }
           scalar JSON
+          type Mutation {
+            stripe: StripeMutations!
+          }
           type Query {
             stripe: Stripe!
           }
