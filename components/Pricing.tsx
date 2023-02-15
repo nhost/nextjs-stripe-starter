@@ -34,6 +34,26 @@ export default function Pricing({ plans, userWithSubscription }: PricingProps) {
     }
 
     try {
+      const res = await fetch(
+        'https://qaxzubvwbuhzgxswghug.functions.eu-central-1.nhost.run/v1/custom/create-checkout-session',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            priceId
+          })
+        }
+      );
+
+      console.log('fetch res:');
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
       const { res, error } = await nhost.functions.call(
         'custom/create-checkout-session',
         {
