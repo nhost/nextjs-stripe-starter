@@ -5,17 +5,16 @@ import { allowCors, getUser } from '../_utils/helpers';
 import { stripe } from 'functions/_utils/stripe';
 
 const handler = async (req: Request, res: Response) => {
-  // CORS check
+  // CORS
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Private-Network', 'true');
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'GET,OPTIONS,PATCH,DELETE,POST,PUT'
-  );
   res.setHeader('Access-Control-Allow-Headers', '*');
+  res.setHeader('Access-Control-Allow-Methods', '*');
+
+  // handle CORS
   if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+    console.log('request is OPTIONS, allow all');
+    return res.status(204).send();
   }
 
   if (req.method !== 'POST') {
