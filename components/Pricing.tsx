@@ -42,6 +42,8 @@ export default function Pricing({ plans, userWithSubscription }: PricingProps) {
       );
 
       if (error) {
+        console.log(res);
+        console.log(error);
         throw Error(error.message);
       }
 
