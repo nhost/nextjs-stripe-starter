@@ -77,7 +77,7 @@ export default function Footer() {
           <div className="flex space-x-6 items-center h-10">
             <a
               aria-label="Github Repository"
-              href="https://github.com/vercel/nextjs-subscription-payments"
+              href="https://github.com/nhost/nextjs-stripe-starter/"
             >
               <GitHub />
             </a>
